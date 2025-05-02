@@ -37,10 +37,10 @@ const Dropdown = () => {
         {sections.map((section, index) => (
           <div key={index} className="border rounded-lg overflow-hidden">
             <button
-              className="w-full px-6 py-4 text-left bg-gray-50 hover:bg-gray-100 flex justify-between items-center"
+              className="w-full px-6 py-2 text-left bg-gray-50 hover:bg-gray-100 flex justify-between items-center"
               onClick={() => toggleSection(index)}
             >
-              <span className="font-medium text-2xl">{section.question}</span>
+              <span className="font-medium text-xl">{section.question}</span>
               <span className="transform transition-transform duration-200">
                 {openSection === index ? '−' : '+'}
               </span>

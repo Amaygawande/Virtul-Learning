@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { FaBrain } from "react-icons/fa";
+import Home from '../components/Videocall/Home'
 
 const Dashboard = () => {
   const [selectedSubject, setSelectedSubject] = useState('All');
@@ -50,7 +53,7 @@ const Dashboard = () => {
     : studyGroups.filter(group => group.subject === selectedSubject);
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-gray-100 relative">
       {/* Sidebar */}
       <div className="w-64 bg-white shadow-lg">
         <div className="p-6">
@@ -73,30 +76,44 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 p-10">
-        <h1 className="text-3xl font-bold mb-8">Study Groups</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredGroups.map((group) => (
-            <div
-              key={group.id}
-              className="text-3xl bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-200"
-            >
-              <h3 className="text-xl font-semibold mb-2">{group.name}</h3>
-              <p className="text-indigo-600 mb-2">{group.subject}</p>
-              <p className="text-gray-600 mb-4">{group.description}</p>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-500">
-                  {group.members} members
-                </span>
-                <button className="bg-indigo-600 rounded-lg text-xl text-white px-4 py-2 rounded hover:bg-indigo-700 transition duration-200">
-                  Join Group
-                </button>
+      <div>
+        {/* navbar */}
+        <div className='h-16 w-full bg-gray-300'>
+          <Link className='bottom-0 flex gap-2 text-xl right-0 m-4 bg-white text-black  px-4 py-2 rounded hover:bg-gray-100 transition duration-200' to="/chatbot">Ask with AI <FaBrain /></Link>
+        </div>
+        <Link to='/room/:roomId'  className='h-16  text-xl bg-gray-300'>
+          <h1>add video call</h1>
+        </Link>
+        {/* Main Content */}
+        <div className="flex-1 p-10">
+          
+          <h1 className="text-3xl font-bold mb-8">Study Groups</h1>
+          
+         
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            {filteredGroups.map((group) => (
+              <div
+                key={group.id}
+                className="text-xl bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-200"
+              >
+                <h3 className="text-xl font-semibold mb-2">{group.name}</h3>
+                <p className="text-indigo-600 mb-2">{group.subject}</p>
+                <p className="text-gray-600 mb-4">{group.description}</p>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-gray-500">
+                    {group.members} members
+                  </span>
+                  <button className="bg-indigo-600  text-xl text-white px-4 py-2 rounded hover:bg-indigo-700 transition duration-200">
+                    Join Group
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
+     
     </div>
   );
 };
