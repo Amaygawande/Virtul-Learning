@@ -77,7 +77,7 @@ const Dashboard = () => {
       {/* Sidebar */}
       <div className="w-64 bg-white shadow-lg h-screen fixed overflow-y-auto">
         <div className="p-6">
-          <h2 className="text-2xl font-semibold mb-6 flex gap-2">  <FaBookReader className='mt-1'/>VirtualStudy</h2>
+          <h2 className="text-2xl text-indigo-600 font-semibold mb-6 flex gap-2">  <FaBookReader className='mt-1'/>VirtualStudy</h2>
           <hr className='mb-6'/>
           <nav className="flex flex-col gap-3">
             <button

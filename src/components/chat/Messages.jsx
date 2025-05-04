@@ -30,7 +30,7 @@ function Messages(props) {
                 msg.push({ ...doc.data(), id: doc.id });
             });
             setAllMessages(msg);
-            console.log("All messages loaded:", msg); // Debug log
+            // console.log("All messages loaded:", msg); // Debug log
             scrollToBottom();
         }, (error) => {
             console.error("Error fetching messages:", error);

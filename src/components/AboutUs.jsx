@@ -1,10 +1,12 @@
 import React from 'react';
 import { FaBookReader, FaUsers, FaLightbulb, FaStar } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import NavBar from './partials/NavBar';
 
 const AboutUs = () => {
     return (
         <div className="min-h-screen bg-gray-50">
+            <NavBar />
             {/* Header Section */}
             <div className="bg-[#2B2B2B] text-white py-20">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

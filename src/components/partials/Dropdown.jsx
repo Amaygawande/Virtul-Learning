@@ -32,12 +32,12 @@ const Dropdown = () => {
   ];
 
   return (
-    <div className="max-w-3xl mx-auto p-4 my-10">
+    <div className="max-w-3xl mx-auto p-4 my-10 ">
       <div className="space-y-4">
         {sections.map((section, index) => (
-          <div key={index} className="border rounded-lg overflow-hidden">
+          <div key={index} className=" rounded-lg overflow-hidden bg-black text-[#e6d9d9]">
             <button
-              className="w-full px-6 py-2 text-left bg-gray-50 hover:bg-gray-100 flex justify-between items-center"
+              className="w-full border-none px-6 py-2 text-left  flex justify-between items-center"
               onClick={() => toggleSection(index)}
             >
               <span className="font-medium text-xl">{section.question}</span>

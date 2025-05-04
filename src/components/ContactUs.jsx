@@ -1,6 +1,7 @@
 // import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import {useState} from 'react'
+import NavBar from './partials/NavBar';
 
 function ContactUs() {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ function ContactUs() {
     <div
       className={`min-h-screen w-screen bg-white text-black flex flex-col items-center overflow-y-auto px-4 sm:px-10 py-10`}
     >
+      {/* <NavBar /> */}
       <div className="w-full max-w-2xl">
         <div className="flex items-center mb-6">
           <i
