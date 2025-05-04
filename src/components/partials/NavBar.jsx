@@ -18,9 +18,14 @@ function NavBar() {
             <Link to="/contact" className="text-gray-600 hover:text-indigo-600 text-xl">Contact Us</Link>
           </nav>
 
-          <Link to='/dashboard' className="bg-[#B3B3B3] flex justify-center items-center gap-2 bg-text-xl text-xl text-black px-3 py-2 rounded-lg hover:bg-[#B3B3B3] transition duration-300">
-            Sign Up <FaGoogle />
-          </Link>
+          <div className='flex items-center gap-4'>
+            <Link to='/login' className="bg-[#B3B3B3] flex justify-center items-center gap-2 bg-text-xl text-xl text-black px-3 py-2 rounded-lg hover:bg-[#B3B3B3] transition duration-300">
+              Login
+            </Link>
+            <Link to='/singup' className="bg-[#B3B3B3] flex justify-center items-center gap-2 bg-text-xl text-xl text-black px-3 py-2 rounded-lg hover:bg-[#B3B3B3] transition duration-300">
+              Sign Up
+            </Link>
+          </div>
         </div>
       </header>
     </div>

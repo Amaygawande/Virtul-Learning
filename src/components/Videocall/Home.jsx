@@ -10,7 +10,7 @@ function Home() {
   },[value,navigate])
   
   return (
-    <div className='flex bg-red-300 flex-col items-center justify-center h-screen'>
+    <div className='flex  flex-col items-center justify-center h-screen'>
         <input 
         value={value}
         onChange={(e)=>setValue(e.target.value)}
