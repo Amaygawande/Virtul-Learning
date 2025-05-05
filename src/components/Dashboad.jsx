@@ -9,6 +9,7 @@ import { AuthContext } from '../context/AuthContext';
 import { FaBookReader } from "react-icons/fa";
 import Messages from './chat/Chat';
 import Chatbot from './Chatbot';
+import Prepration from './Prepration';
 
 const Dashboard = () => {
   const [selectedSubject, setSelectedSubject] = useState('All');
@@ -105,11 +106,13 @@ const Dashboard = () => {
               <FaRobot /> Ask with AI
             </button>
             <button
-              onClick={() => setActiveComponent('preparation')}
-              className={`flex items-center gap-2 px-4 py-3 rounded text-lg ${activeComponent === 'preparation' ? 'bg-indigo-600 text-white' : 'hover:bg-gray-100'}`}
-            >
-              <FaBook /> Preparation
-            </button>
+                onClick={() => setActiveComponent('preparation')}
+                className={`flex items-center gap-2 px-4 py-3 rounded text-lg ${activeComponent === 'preparation' ? 'bg-indigo-600 text-white' : 'hover:bg-gray-100'}`}
+              >
+                <FaBook /> Preparation
+              </button>
+
+
           </nav>
         </div>
       </div>
@@ -195,8 +198,7 @@ const Dashboard = () => {
 
           {activeComponent === 'preparation' && (
             <div className="bg-white p-8 rounded-lg shadow">
-              <h2 className="text-2xl font-bold mb-6">Preparation Materials</h2>
-              <p className="text-gray-600">Study preparation materials would go here</p>
+              <Prepration/>
             </div>
           )}
         </div>

@@ -10,6 +10,7 @@ import Login from "./components/Auth/Login";
 import Singup from "./components/Auth/SingUp";
 import { AuthContext } from "./context/AuthContext";
 import Chat from "./components/chat/Chat";
+import Prepration from "./components/Prepration";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -45,6 +46,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/room/:roomId" element={<Room />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/prepration" element={<Prepration />} />
         </Route>
 
         {/* Fallback: If no route matches, redirect based on login */}
