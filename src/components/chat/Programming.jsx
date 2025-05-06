@@ -3,69 +3,68 @@ import { AuthContext } from '../../context/AuthContext';
 import { addDoc, collection, onSnapshot, orderBy, query, serverTimestamp, where } from 'firebase/firestore';
 import { db } from '../../firebase';
 
-function Messages(props) {
-    const { room } = props;
+const Programming = () => {
     const [message, setMessage] = useState('');
-    const [allMessages, setAllMessages] = useState([]);
-    const messagesEndRef = useRef(null);
-
-    const messageRef = collection(db, 'messages');
-
-    const { currentUser } = useContext(AuthContext);
-
-    const scrollToBottom = () => {
-        // messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    };
-
-    useEffect(() => {
-        // Query all messages from Firebase without room filter
-        const queryMessages = query(
-            messageRef, 
-            orderBy("createdAt", "asc")
-        );
-        
-        const unsubscribe = onSnapshot(queryMessages, (snapshot) => {
-            let msg = [];
-            snapshot.forEach((doc) => {
-                msg.push({ ...doc.data(), id: doc.id });
+        const [allMessages, setAllMessages] = useState([]);
+        const messagesEndRef = useRef(null);
+    
+        const messageRef = collection(db, 'programming');
+    
+        const { currentUser } = useContext(AuthContext);
+    
+        const scrollToBottom = () => {
+            // messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        };
+    
+        useEffect(() => {
+            // Query all messages from Firebase without room filter
+            const queryMessages = query(
+                messageRef, 
+                orderBy("createdAt", "asc")
+            );
+            
+            const unsubscribe = onSnapshot(queryMessages, (snapshot) => {
+                let msg = [];
+                snapshot.forEach((doc) => {
+                    msg.push({ ...doc.data(), id: doc.id });
+                });
+                setAllMessages(msg);
+                // console.log("All messages loaded:", msg); // Debug log
+                scrollToBottom();
+            }, (error) => {
+                console.error("Error fetching messages:", error);
             });
-            setAllMessages(msg);
-            // console.log("All messages loaded:", msg); // Debug log
+    
+            return () => unsubscribe();
+        }, [messageRef]); // Removed room dependency to show all messages
+    
+        useEffect(() => {
             scrollToBottom();
-        }, (error) => {
-            console.error("Error fetching messages:", error);
-        });
-
-        return () => unsubscribe();
-    }, [messageRef]); // Removed room dependency to show all messages
-
-    useEffect(() => {
-        scrollToBottom();
-    }, [allMessages]);
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (message.trim() === '') {
-            return;
+        }, [allMessages]);
+    
+        const handleSubmit = async (e) => {
+            e.preventDefault();
+            if (message.trim() === '') {
+                return;
+            }
+    
+            try {
+                await addDoc(messageRef, {
+                    text: message,
+                    createdAt: serverTimestamp(),
+                    user: currentUser?.displayName || currentUser?.email || currentUser?.uid,
+                    // room: room,
+                });
+                setMessage('');
+                console.log("Message sent successfully"); // Debug log
+            } catch (error) {
+                console.error("Error sending message:", error);
+            }
         }
-
-        try {
-            await addDoc(messageRef, {
-                text: message,
-                createdAt: serverTimestamp(),
-                user: currentUser?.displayName || currentUser?.email || currentUser?.uid,
-                room: room,
-            });
-            setMessage('');
-            console.log("Message sent successfully"); // Debug log
-        } catch (error) {
-            console.error("Error sending message:", error);
-        }
-    }
 
     return (
         <div className='flex flex-col h-screen bg-gray-100'>
-            <h1 className='text-2xl font-bold p-4 text-center bg-white shadow-sm'>Welcome to {room} room</h1>
+            <h1 className='text-2xl font-bold p-4 text-center bg-white shadow-sm'>Welcome to Programming Room</h1>
             
             <div className="flex-1 overflow-hidden p-4">
                 <div className="h-full overflow-y-auto pb-4 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
@@ -122,7 +121,6 @@ function Messages(props) {
                 </div>
             </form>
         </div>
-    )
+    );
 }
-
-export default Messages
+export default Programming;

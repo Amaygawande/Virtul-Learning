@@ -11,6 +11,12 @@ import Singup from "./components/Auth/SingUp";
 import { AuthContext } from "./context/AuthContext";
 import Chat from "./components/chat/Chat";
 import Prepration from "./components/Prepration";
+import Messages from "./components/chat/Messages";
+//chat groups
+import Interview from "./components/chat/Interview";
+import English from "./components/chat/English";
+import Aptitude from "./components/chat/Aptitude";
+import Programming from "./components/chat/Programming";
 
 function App() {
   const { currentUser } = useContext(AuthContext);
@@ -47,6 +53,11 @@ function App() {
           <Route path="/room/:roomId" element={<Room />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/prepration" element={<Prepration />} />
+          <Route path="/messages" element={<Messages />} />
+          <Route path="/interview" element={<Interview />} />
+          <Route path="/english" element={<English />} />
+          <Route path="/aptitude" element={<Aptitude />} />
+          <Route path="/programming" element={<Programming />} />
         </Route>
 
         {/* Fallback: If no route matches, redirect based on login */}

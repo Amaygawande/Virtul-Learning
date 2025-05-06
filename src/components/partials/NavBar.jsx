@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 import GooeyNav from '../ReactBits/NavStyle';
 
 function NavBar() {
-  const items = [
-    { label: "Home", href: "/" },
-    { label: "About", href: "/about" },
-    { label: "Contact", href: "/contact" },
-  ];
+  // const items = [
+  //   { label: "Home", href: "/" },
+  //   { label: "About", href: "/about" },
+  //   { label: "Contact", href: "/contact" },
+  // ];
 
   return (
     <div>
@@ -20,7 +20,7 @@ function NavBar() {
           </h1>
 
           {/* Nav Links */}
-          <nav className="hidden md:flex items-center gap-8">
+          {/* <nav className="hidden md:flex items-center gap-8">
             <GooeyNav
               items={items}
               particleCount={15}
@@ -31,7 +31,12 @@ function NavBar() {
               timeVariance={300}
               colors={[1, 2, 3, 1, 2, 3, 1, 4]}
             />
-          </nav>
+          </nav> */}
+          <div className='flex gap-3 text-lg'>
+            <Link className='px-3 py-[0.5vw] rounded-md text-black bg-white '  to='/'>Home</Link>
+            <Link className='px-3 py-[0.5vw] rounded-md' to='/about'>About</Link>
+            <Link className='px-3 py-[0.5vw] rounded-md' to='/contact'>Contact</Link>
+          </div>
 
           {/* Auth Buttons */}
           <div className="flex items-center gap-2">

@@ -161,20 +161,20 @@ const LandingPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
               <h3 className="text-xl font-bold mb-4 flex gap-2"><FaBookReader />VirtualStudy</h3>
-              <p className="text-gray-400 text-xl">Your virtual learning companion</p>
+              <p className="text-gray-400 text-[1.3vw]">Your virtual learning companion</p>
             </div>
             <div>
               <h3 className="text-xl font-bold mb-4">Quick Links</h3>
-              <ul className="space-y-2 text-xl">
+              <ul className="space-y-2 text-[1.3vw]">
                 <li><Link to="/about" className="text-gray-400 hover:text-white">About Us</Link></li>
                 <li><Link to="/contact" className="text-gray-400 hover:text-white">Contact</Link></li>
                 <li><a href="#" className="text-gray-400 hover:text-white">Privacy Policy</a></li>
               </ul>
             </div>
-            <div className='text-xl'>
+            <div className='text-[1.3vw]'>
               <h3 className="text-xl font-bold mb-4">Contact Us</h3>
-              <p className="text-gray-400">Email: support@studygroup.com</p>
-              <p className="text-gray-400">Phone: 329057329843290</p>
+              <p className="text-gray-400">Email: support@VirtualStudy.com</p>
+              <p className="text-gray-400">Phone: +91 8723568736423</p>
             </div>
           </div>
           <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
