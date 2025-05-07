@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FaBrain, FaVideo, FaPlus, FaBook, FaRobot, FaBookReader } from "react-icons/fa";
+import { FaBrain, FaVideo, FaPlus, FaBook, FaRobot, FaBookReader, FaBars, FaTimes } from "react-icons/fa";
 import Home from '../components/Videocall/Home';
 import { signOut } from "firebase/auth";
 import { auth } from '../firebase';
@@ -19,6 +19,7 @@ const Dashboard = () => {
   const [activeComponent, setActiveComponent] = useState('groups');
   const { currentUser } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -40,10 +41,21 @@ const Dashboard = () => {
 
   const filteredGroups = selectedSubject === 'All' ? studyGroups : studyGroups.filter(group => group.subject === selectedSubject);
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-gray-100 overflow-x-hidden">
+      {/* Mobile Menu Button */}
+      <div className="md:hidden fixed top-0 left-0 p-4 z-20">
+        <button onClick={toggleMobileMenu} className="text-gray-700 hover:text-indigo-600 focus:outline-none focus:shadow-outline">
+          {isMobileMenuOpen ? <FaTimes className="h-6 w-6" /> : <FaBars className="h-6 w-6" />}
+        </button>
+      </div>
+
       {/* Sidebar */}
-      <div className="w-64 bg-white shadow-xl h-screen fixed overflow-y-auto animate-slide-in-left">
+      <div className={`w-64 bg-white shadow-xl h-screen fixed top-0 left-0 overflow-y-auto z-10 transform transition-transform duration-300 ease-in-out md:translate-x-0 ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}`}>
         <div className="p-6">
           <h2 className="text-2xl text-indigo-600 font-bold mb-6 flex gap-2 items-center">
             <FaBookReader className='text-indigo-500' /> VirtualStudy
@@ -63,7 +75,10 @@ const Dashboard = () => {
             }].map(item => (
               <button
                 key={item.key}
-                onClick={() => setActiveComponent(item.key)}
+                onClick={() => {
+                  setActiveComponent(item.key);
+                  setIsMobileMenuOpen(false); // Close mobile menu after selection
+                }}
                 className={`flex items-center gap-2 px-4 py-3 rounded-lg transition-all duration-300 text-lg ${activeComponent === item.key ? 'bg-indigo-600 text-white shadow-md' : 'hover:bg-gray-100 text-gray-800'}`}
               >
                 {item.icon} {item.label}
@@ -81,12 +96,12 @@ const Dashboard = () => {
       </div>
 
       {/* Main content */}
-      <div className="ml-64 flex-1 flex flex-col">
+      <div className={`flex-1 flex flex-col transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'ml-0' : 'md:ml-64'} overflow-x-hidden`}>
         <div className='h-16 w-full bg-white shadow flex items-center justify-between px-6 animate-fade-in-down'>
           {/* Profile Icon with Tooltip */}
           <div className="relative group flex gap-1">
-            <CgProfile className="text-2xl text-gray-700 cursor-pointer" /> 
-            <p>{currentUser?.email}</p>
+            <CgProfile className={`text-2xl text-gray-700 cursor-pointer ${isMobileMenuOpen ?'px-[2vw]':'ml-0'}`} />
+            <p className="hidden md:block">{currentUser?.email}</p>
             <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-max bg-gray-800 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
               {currentUser?.email}
             </div>
@@ -96,22 +111,22 @@ const Dashboard = () => {
           <div className="flex items-center gap-4 ">
             {/* <p className="font-medium text-gray-600">{currentUser?.email?.split('@')[0]}</p> */}
             <button onClick={handleLogout} className="flex justify-center gap-1 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition">
-            <IoMdArrowBack className='mt-1' />Logout
+              <IoMdArrowBack className='mt-1' />Logout
             </button>
           </div>
         </div>
 
-        <div className="flex-1 px-8 py-6 animate-fade-in">
+        <div className="flex-1 px-6 py-6 sm:px-8 animate-fade-in overflow-x-hidden">
           {activeComponent === 'groups' && (
             <>
-              <div className="flex justify-between items-center mb-8">
-                <h1 className="text-3xl font-bold text-gray-800">Study Groups</h1>
-                <div className="flex gap-2">
+              <div className="flex justify-between items-center mb-6 flex-col sm:flex-row gap-y-2 sm:gap-y-0">
+                <h1 className="text-3xl font-bold text-gray-800 mb-2 sm:mb-0">Study Groups</h1>
+                <div className="flex gap-2 overflow-x-auto sm:flex-row flex-wrap justify-end">
                   {subjects.map((subject) => (
                     <button
                       key={subject}
                       onClick={() => setSelectedSubject(subject)}
-                      className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all duration-300 border ${selectedSubject === subject ? 'bg-indigo-600 text-white' : 'bg-white text-gray-700 hover:bg-indigo-100 border-gray-300'}`}
+                      className={`px-3 py-1 rounded-md text-sm font-medium transition-all duration-300 border ${selectedSubject === subject ? 'bg-indigo-600 text-white' : 'bg-white text-gray-700 hover:bg-indigo-100 border-gray-300'} sm:px-4 sm:py-1.5`}
                     >
                       {subject}
                     </button>
@@ -119,15 +134,15 @@ const Dashboard = () => {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {filteredGroups.map((group) => (
-                  <div key={group.id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition transform hover:scale-[1.02] duration-200">
-                    <h3 className="text-xl font-semibold mb-1 text-gray-800">{group.name}</h3>
-                    <p className="text-indigo-600 mb-2 font-medium">{group.subject}</p>
-                    <p className="text-gray-600 mb-4">{group.description}</p>
+                  <div key={group.id} className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition transform hover:scale-[1.02] duration-200 sm:p-6">
+                    <h3 className="text-xl font-semibold mb-1 text-gray-800 break-words">{group.name}</h3>
+                    <p className="text-indigo-600 mb-2 font-medium break-words">{group.subject}</p>
+                    <p className="text-gray-600 mb-4 break-words text-sm sm:text-base">{group.description}</p>
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-gray-500">{group.members} members</span>
-                      <Link to={`/${group.subject.toLowerCase()}`} className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition">
+                      <Link to={`/${group.subject.toLowerCase()}`} className="bg-indigo-600 text-white px-3 py-1 rounded hover:bg-indigo-700 transition text-sm sm:px-4 sm:py-2">
                         Join Group
                       </Link>
                     </div>
@@ -138,25 +153,25 @@ const Dashboard = () => {
           )}
 
           {activeComponent === 'create' && (
-            <div className="bg-white p-8 rounded-lg shadow animate-fade-in">
+            <div className="bg-white p-6 rounded-lg shadow animate-fade-in sm:p-8">
               <Messages room="general" />
             </div>
           )}
 
           {activeComponent === 'video' && (
-            <div className="bg-white p-8 rounded-lg shadow animate-fade-in">
+            <div className="bg-white p-6 rounded-lg shadow animate-fade-in  sm:p-8">
               <Home />
             </div>
           )}
 
           {activeComponent === 'ai' && (
-            <div className="bg-white p-8 rounded-lg shadow animate-fade-in">
+            <div className="bg-white p-6 rounded-lg shadow animate-fade-in  sm:p-8">
               <Chatbot />
             </div>
           )}
 
           {activeComponent === 'preparation' && (
-            <div className="bg-white p-8 rounded-lg shadow animate-fade-in">
+            <div className="bg-white p-6 rounded-lg shadow animate-fade-in  sm:p-8">
               <Prepration />
             </div>
           )}
